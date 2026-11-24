@@ -68,6 +68,13 @@ h3{font-size:1.02rem;font-weight:800;letter-spacing:-.01em}
 .chip.g .v{color:var(--green)} .chip.b .v{color:var(--blue)} .chip.p .v{color:var(--pink)}
 
 .hero-stage{position:relative;display:flex;justify-content:center}
+/* Hero 三机错落（v4） */
+.hero-trio{position:relative;width:100%;height:clamp(350px,36vw,460px);z-index:1}
+.hero-trio .ht{position:absolute;display:block;height:auto;pointer-events:none;-webkit-user-drag:none}
+.ht-left{left:0;top:0;width:30%;transform:rotate(-3deg)}
+.ht-center{left:33%;top:12%;width:34%;z-index:3}
+.ht-right{right:0;top:0;width:30%;transform:rotate(3deg)}
+@media (max-width:960px){.hero-trio{height:clamp(300px,54vw,400px)}}
 .phone{position:relative;width:min(300px,72vw);border-radius:42px;background:#101319;padding:12px;
   box-shadow:0 30px 60px rgba(31,36,48,.28),inset 0 0 0 2px #2A2F3D;animation:float 5.5s ease-in-out infinite}
 .phone::before{content:"";position:absolute;top:20px;left:50%;transform:translateX(-50%);
@@ -484,38 +491,11 @@ footer b{color:var(--ink)}
     </div>
     <div class="hero-stage rv">
       <span class="dot-deco dd1"></span><span class="dot-deco dd2"></span>
-      <div class="phone">
-        <div class="ph">
-          <div class="ph-head">
-            <div class="ph-title"><span>&#8249; 搜索闲置</span></div>
-            <div class="sbar">🔍 搜索闲置物品</div>
-          </div>
-          <div class="ph-body">
-            <div class="sec-t">🔥 热门搜索</div>
-            <div class="chips">
-              <span class="c-hot">耳机</span><span class="c-hot">考研笔记</span><span class="c-hot">收纳箱</span>
-              <span class="c-hot">雨伞</span><span class="c-hot">充电宝</span><span class="c-hot">卫衣</span>
-              <span class="c-hot">泡面</span><span class="c-hot">cos</span>
-            </div>
-            <div class="sec-t" style="margin-top:12px">📁 按分类挑选</div>
-            <div class="chips">
-              <span class="c-cat">教材书籍</span><span class="c-cat">电子数码</span><span class="c-cat">生活用品</span>
-              <span class="c-cat">服饰鞋包</span><span class="c-cat">文体用品</span><span class="c-cat">宿舍家具</span>
-              <span class="c-cat">美妆杂物</span><span class="c-cat">食品零食</span><span class="c-cat">二次元周边</span>
-              <span class="c-cat">其他闲置</span>
-            </div>
-            <div class="sec-t" style="margin-top:12px">搜索历史</div>
-            <p style="font-size:.56rem;color:#B79A82">暂无记录，搜过的关键词会出现在这里</p>
-          </div>
-          <div class="ph-tabs">
-            <span class="tb"><i>🏠</i>首页</span><span class="tb"><i>▦</i>广场</span>
-            <span class="tb plus"><i>＋</i>发布</span><span class="tb"><i>🔔</i>消息</span><span class="tb"><i>👤</i>我的</span>
-          </div>
-        </div>
+      <div class="hero-trio">
+        <img class="ht ht-left" src="assets/hero-left.png" alt="闲鹅 · 发布闲置">
+        <img class="ht ht-center" src="assets/hero-center.png" alt="闲鹅 · 启动页">
+        <img class="ht ht-right" src="assets/hero-right.png" alt="闲鹅 · 首页">
       </div>
-      <div class="float-chip fc1"><b>AI 识别</b><small>拍照自动生成标签与描述</small></div>
-      <div class="float-chip fc2"><b>驿站自提</b><small>东门驿站 · 顺路取货</small></div>
-      <div class="float-chip fc3"><b>偏好匹配</b><small>按浏览与交易偏好推荐</small></div>
     </div>
   </div>
 </section>

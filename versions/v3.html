@@ -1,0 +1,1278 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>闲鹅 · 校园二手平台 产品故事 — 从想法到 3.0</title>
+<style>
+:root{
+  --bg:#F3F5FB; --card:#FFFFFF; --ink:#1F2430; --muted:#7A8095;
+  --blue:#3D6BFF; --blue-soft:#EAF0FF;
+  --green:#2FA36B; --green-soft:#EAF7EF;
+  --pink:#F2699C; --pink-soft:#FFEDF4;
+  --yellow:#FFD84D; --yellow-soft:#FFF7DC;
+  --lav:#E3E7F8;
+  --line:rgba(31,36,48,.1);
+  --sans:"Inter","Helvetica Neue",Arial,"PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+  --mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--ink);font-family:var(--sans);line-height:1.7;-webkit-font-smoothing:antialiased}
+img{max-width:100%;display:block}
+a{color:inherit}
+::selection{background:var(--yellow)}
+
+/* 导航 */
+.nav{position:sticky;top:0;z-index:50;background:rgba(255,255,255,.86);backdrop-filter:blur(12px);
+  border-bottom:1px solid var(--line);display:flex;align-items:center;gap:18px;
+  padding:12px clamp(16px,4vw,48px)}
+.nav .logo{font-weight:900;font-size:.95rem;letter-spacing:-.01em;display:flex;align-items:center;gap:9px}
+.nav .logo .egg{width:26px;height:26px;border-radius:50% 50% 50% 8px;background:linear-gradient(145deg,#FFD84D,#FFB443);
+  display:grid;place-items:center;font-size:.8rem}
+.nav .links{display:flex;gap:4px;margin-left:auto;flex-wrap:wrap}
+.nav .links a{text-decoration:none;font-size:.78rem;font-weight:700;color:var(--muted);
+  padding:7px 12px;border-radius:999px;transition:.2s}
+.nav .links a:hover{background:var(--blue-soft);color:var(--blue)}
+.nav .cta{text-decoration:none;font-size:.74rem;font-weight:800;color:var(--ink);
+  border:1.5px solid var(--ink);border-radius:999px;padding:7px 14px;transition:.2s;white-space:nowrap}
+.nav .cta:hover{background:var(--ink);color:#fff}
+
+.wrap{width:100%;max-width:1160px;margin:0 auto;padding:0 clamp(16px,4vw,40px)}
+section{padding:clamp(56px,9vh,110px) 0}
+
+.kicker{font-family:var(--mono);font-size:.62rem;letter-spacing:.28em;color:var(--blue);text-transform:uppercase;font-weight:700}
+.pill{display:inline-flex;align-items:center;gap:7px;border:1.5px solid var(--ink);border-radius:999px;
+  padding:6px 14px;font-family:var(--mono);font-size:.6rem;letter-spacing:.14em;text-transform:uppercase;font-weight:700}
+.pill i{width:7px;height:7px;border-radius:50%;background:var(--green);display:inline-block}
+h1{font-size:clamp(2.3rem,5.4vw,4.3rem);line-height:1.06;letter-spacing:-.03em;font-weight:900;margin:18px 0 0}
+h1 .b{color:var(--blue)} h1 .g{color:var(--green)} h1 .p{color:var(--pink)}
+h2{font-size:clamp(1.7rem,3.4vw,2.7rem);line-height:1.14;letter-spacing:-.025em;font-weight:900}
+h2 .b{color:var(--blue)} h2 .g{color:var(--green)} h2 .p{color:var(--pink)}
+h3{font-size:1.02rem;font-weight:800;letter-spacing:-.01em}
+.lede{color:#4A5063;font-size:clamp(.92rem,1.2vw,1.02rem);max-width:36em}
+.sec-head{text-align:center;display:flex;flex-direction:column;align-items:center;gap:14px;margin-bottom:clamp(30px,4.5vw,52px)}
+.sec-head .lede{text-align:center}
+
+/* HERO */
+.hero{padding-top:clamp(40px,7vh,84px);overflow:hidden}
+.hero-grid{display:grid;grid-template-columns:1.06fr .94fr;gap:clamp(24px,4vw,60px);align-items:center}
+.hero-copy .pill{margin-bottom:6px}
+.hero-copy .lede{margin-top:18px}
+.hero-copy .lede b{color:var(--ink)}
+.hero-metrics{display:flex;gap:12px;margin-top:26px;flex-wrap:wrap}
+.chip{background:#fff;border:1px solid var(--line);border-radius:14px;padding:10px 14px;
+  box-shadow:0 10px 24px rgba(31,36,48,.08)}
+.chip .v{font-size:1.15rem;font-weight:900;letter-spacing:-.03em}
+.chip .k{font-family:var(--mono);font-size:.55rem;letter-spacing:.1em;color:var(--muted);text-transform:uppercase}
+.chip.g .v{color:var(--green)} .chip.b .v{color:var(--blue)} .chip.p .v{color:var(--pink)}
+
+.hero-stage{position:relative;display:flex;justify-content:center}
+.phone{position:relative;width:min(300px,72vw);border-radius:42px;background:#101319;padding:12px;
+  box-shadow:0 30px 60px rgba(31,36,48,.28),inset 0 0 0 2px #2A2F3D;animation:float 5.5s ease-in-out infinite}
+.phone::before{content:"";position:absolute;top:20px;left:50%;transform:translateX(-50%);
+  width:88px;height:20px;border-radius:12px;background:#101319;z-index:3}
+.phone img{border-radius:30px;width:100%}
+@keyframes float{0%,100%{transform:translateY(0) rotate(-1.2deg)}50%{transform:translateY(-14px) rotate(1.2deg)}}
+.float-chip{position:absolute;background:#fff;border:1px solid var(--line);border-radius:999px;
+  padding:8px 14px;font-size:.72rem;font-weight:800;box-shadow:0 14px 30px rgba(31,36,48,.16);
+  animation:float 6s ease-in-out infinite;z-index:4}
+.float-chip small{display:block;font-family:var(--mono);font-size:.52rem;letter-spacing:.08em;color:var(--muted);font-weight:600}
+.fc1{top:6%;left:-6%;animation-delay:.8s}
+.fc1 b{color:var(--blue)}
+.fc2{bottom:16%;right:-4%;animation-delay:1.6s}
+.fc2 b{color:var(--green)}
+.fc3{top:38%;right:-9%;animation-delay:2.4s}
+.fc3 b{color:var(--pink)}
+.dot-deco{position:absolute;border-radius:50%;z-index:0}
+.dd1{width:190px;height:190px;background:var(--blue-soft);top:-30px;right:-40px}
+.dd2{width:120px;height:120px;background:var(--pink-soft);bottom:-20px;left:-30px}
+
+/* 指标带 */
+.metrics{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+.metric{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:18px 18px 14px;
+  box-shadow:0 16px 34px rgba(31,36,48,.07)}
+.metric .v{font-size:clamp(1.7rem,3vw,2.4rem);font-weight:900;letter-spacing:-.04em;color:var(--green);line-height:1.05}
+.metric .t{font-size:.8rem;font-weight:800;margin-top:2px}
+.metric .d{font-size:.68rem;color:var(--muted);margin-top:2px;min-height:2.1em}
+.metric svg{width:100%;height:34px;margin-top:8px}
+.metric svg polyline{fill:none;stroke:var(--green);stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round}
+.metric svg circle{fill:var(--green)}
+
+/* FIELD NOTES 重建：表格与卡片 */
+.fn-card{background:#fff;border:1px solid var(--line);border-radius:22px;overflow:hidden;
+  box-shadow:0 24px 50px rgba(31,36,48,.09)}
+.fn-head{background:#14161C;color:#fff;padding:15px clamp(16px,2.4vw,24px);display:flex;
+  align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap}
+.fn-head h3{color:#fff;font-size:.98rem;letter-spacing:.02em}
+.fn-head .sub{font-family:var(--mono);font-size:.54rem;letter-spacing:.22em;color:#8E93A6;text-transform:uppercase;font-weight:600}
+.fn-body{padding:clamp(14px,2.2vw,24px)}
+.fn-cap{display:flex;align-items:center;gap:10px;padding:12px 6px 2px;flex-wrap:wrap;border-top:1px dashed var(--line);margin-top:14px}
+.fn-cap .tag{font-family:var(--mono);font-size:.56rem;letter-spacing:.14em;text-transform:uppercase;
+  background:var(--lav);border-radius:6px;padding:4px 9px;color:#3A4160;font-weight:700}
+.fn-cap p{font-size:.72rem;color:var(--muted)}
+table.cmp{width:100%;border-collapse:collapse;font-size:.7rem}
+.cmp th,.cmp td{border:1px solid var(--line);padding:9px 12px;vertical-align:top;text-align:left}
+.cmp thead th{background:#F2F4FA;font-size:.72rem;font-weight:900;letter-spacing:.02em}
+.cmp thead th small{display:block;font-family:var(--mono);font-size:.5rem;color:var(--muted);letter-spacing:.12em;font-weight:600;margin-top:2px}
+.cmp tbody th{background:#F7F8FC;width:112px;font-weight:800;font-size:.68rem;white-space:nowrap}
+.cmp tbody th small{display:block;font-family:var(--mono);font-size:.48rem;color:var(--muted);letter-spacing:.14em;font-weight:600;margin-top:2px}
+.cmp td{color:#4A5063;line-height:1.7}
+.cmp td b{color:var(--ink)}
+.cmp td ol{margin:0;padding-left:1.1em}
+.fn-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+.fn-mini{border:1px solid var(--line);border-radius:12px;padding:12px 13px;background:#FBFCFE}
+.fn-mini b{font-size:.76rem;display:flex;align-items:center;gap:7px}
+.fn-mini b .idx{font-family:var(--mono);font-size:.52rem;background:var(--ink);color:#fff;border-radius:5px;padding:2px 6px;letter-spacing:.06em}
+.fn-mini p{font-size:.68rem;color:#565D72;margin-top:5px;line-height:1.65}
+.fn-mini p em{font-style:normal;color:var(--muted)}
+.fn-head2{display:flex;align-items:center;justify-content:space-between;gap:10px;margin:20px 0 12px;flex-wrap:wrap}
+.fn-head2 h4{font-size:.86rem;font-weight:900;letter-spacing:-.01em}
+.fn-head2 span{font-family:var(--mono);font-size:.54rem;letter-spacing:.18em;color:var(--muted);text-transform:uppercase;font-weight:700}
+table.pit{width:100%;border-collapse:collapse;font-size:.7rem}
+.pit th,.pit td{border:1px solid var(--line);padding:8px 12px;text-align:left;vertical-align:top;line-height:1.65}
+.pit thead th{background:#F2F4FA;font-size:.68rem;font-weight:800}
+.pit .kind{white-space:nowrap;font-weight:800;color:var(--ink);font-size:.68rem}
+.pit .bad{color:#B23A48}
+.pit .good{color:#2FA36B}
+.word4{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+.w4{border:1px solid var(--line);border-radius:12px;padding:12px;background:var(--yellow-soft);text-align:center}
+.w4 .zi{font-size:1.5rem;font-weight:900;letter-spacing:0;color:var(--ink)}
+.w4 p{font-size:.62rem;color:#6B5A1F;margin-top:4px;line-height:1.5}
+.plan{display:grid;grid-template-columns:1.15fr .85fr;gap:12px}
+.plan-box{border:1px solid var(--line);border-radius:12px;padding:12px 14px;background:#FBFCFE}
+.plan-box h5{font-size:.72rem;font-weight:900;margin-bottom:6px;display:flex;gap:8px;align-items:center}
+.plan-box h5 .tag{font-family:var(--mono);font-size:.5rem;letter-spacing:.14em;background:var(--blue-soft);color:var(--blue);border-radius:5px;padding:2px 7px;text-transform:uppercase}
+.plan-box p,.plan-box li{font-size:.68rem;color:#565D72;line-height:1.7}
+.plan-box ol{margin:0;padding-left:1.2em}
+.opening{background:#14161C;color:#D8DAE3;border-radius:12px;padding:12px 14px;font-size:.68rem;line-height:1.8}
+.opening b{color:#FFD84D}
+/* 同理心地图 */
+.emap{display:grid;grid-template-columns:1fr 1fr;gap:10px;position:relative;padding-top:44px}
+.emap .q{border:1px solid var(--line);border-radius:14px;padding:12px 12px 10px;background:#FBFCFE;min-height:150px}
+.emap .q h4{font-family:var(--mono);font-size:.56rem;letter-spacing:.18em;color:var(--muted);text-transform:uppercase;font-weight:700;display:flex;justify-content:space-between}
+.emap .q h4 b{color:var(--ink);font-size:.7rem;font-family:var(--sans);letter-spacing:0}
+.emap .notes{display:flex;flex-direction:column;gap:6px;margin-top:8px}
+.emap .note{background:#FFF7DC;border-radius:7px;padding:7px 10px;font-size:.65rem;color:#4E4630;
+  box-shadow:2px 2px 0 rgba(31,36,48,.12);line-height:1.55}
+.emap .q.blue .note{background:#E7EEFF;color:#3A4E7E}
+.emap .q.pink .note{background:#FFE3EE;color:#7E3A5C}
+.emap .q.green .note{background:#E3F5E9;color:#2E5C42}
+.emap .core{position:absolute;top:16px;left:50%;transform:translateX(-50%);
+  background:#fff;border:1.5px solid var(--ink);border-radius:999px;padding:6px 16px;
+  font-size:.64rem;font-weight:800;box-shadow:0 10px 22px rgba(31,36,48,.14);white-space:nowrap;z-index:2}
+.emap .pg{grid-column:1/-1;display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:10px}
+.emap .pg .p,.emap .pg .g{border-radius:14px;padding:12px;font-size:.66rem;line-height:1.7}
+.emap .pg .p{background:#FFEDF0;border:1px solid rgba(178,58,72,.25)}
+.emap .pg .g{background:#EAF7EF;border:1px solid rgba(47,163,107,.25)}
+.emap .pg b{display:block;font-size:.72rem;margin-bottom:4px}
+.emap .pg .p b{color:#B23A48}
+.emap .pg .g b{color:#2FA36B}
+
+/* 用户旅程地图 */
+.jinfo{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:14px}
+.jinfo .card{border:1px solid var(--line);border-radius:12px;padding:12px 14px;background:#F7F8FC;display:flex;gap:10px;align-items:center}
+.jinfo .card .av{font-size:1.6rem}
+.jinfo .card b{font-size:.72rem;color:var(--ink)}
+.jinfo .card p{font-size:.68rem;color:#565D72;margin-top:2px;line-height:1.5}
+.jscroll{overflow-x:auto;padding-bottom:4px}
+.jgrid{display:grid;grid-template-columns:84px repeat(6,1fr);gap:6px;min-width:900px}
+.jlab{background:#EEF1FA;border-radius:10px;display:flex;align-items:center;justify-content:center;
+  font-weight:800;font-size:.7rem;color:#3A4160;min-height:44px;padding:6px 4px;text-align:center}
+.jstage{grid-column:span 2;background:#DDEBFC;border-radius:10px;display:flex;align-items:center;justify-content:center;
+  font-weight:900;font-size:.75rem;color:#2E5B8F;padding:10px;letter-spacing:.05em}
+.jgoal{background:#E9EBF4;clip-path:polygon(0 0,calc(100% - 12px) 0,100% 50%,calc(100% - 12px) 100%,0 100%,12px 50%);
+  display:flex;align-items:center;justify-content:center;font-weight:800;font-size:.68rem;color:#3A4160;
+  min-height:44px;padding:6px 16px;text-align:center}
+.jcell{background:#fff;border:1px solid var(--line);border-radius:10px;padding:10px 11px;
+  font-size:.65rem;color:#4A5063;line-height:1.7}
+.jcell.say{font-style:italic;background:#FBFCFE}
+.jcell.touch{background:#F2F7FF;border-color:#D6E5FB}
+.jcell.prob{background:#FFF5F6;border-color:#F5DBDF}
+.jcell.opp{background:#F2FAF5;border-color:#CFE9DA}
+.jcell.prob,.jcell.opp{font-weight:600}
+.jchip{display:inline-block;background:#F0F1F5;border-radius:8px;padding:4px 10px;font-size:.62rem;font-weight:700;color:#5A6072}
+.jemo{position:relative;background:#fff;border:1px solid var(--line);border-radius:10px;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;min-height:74px;padding:8px}
+.jemo .e{font-size:1.35rem;line-height:1}
+.jemo .t{font-size:.58rem;color:#C4764F;font-weight:800}
+.jemo svg{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
+.jemo svg path{fill:none;stroke:#E8A87C;stroke-width:.45;opacity:.75}
+
+/* CSS 重绘：App 界面模拟（不用截图，纯手绘） */
+.ph{width:min(300px,76vw);background:#fff;border:1px solid var(--line);border-radius:26px;overflow:hidden;
+  box-shadow:0 30px 60px rgba(31,36,48,.16);font-size:.62rem}
+.ph .ph-head{background:linear-gradient(135deg,#F6A05C,#EE8434);color:#fff;padding:12px 14px 14px}
+.ph .ph-title{display:flex;justify-content:space-between;align-items:center;font-weight:900;font-size:.78rem}
+.ph .ph-title small{font-weight:600;font-size:.5rem;background:rgba(255,255,255,.22);border-radius:999px;padding:2px 8px}
+.ph .sbar{background:#fff;color:#B08968;border-radius:999px;padding:8px 12px;display:flex;gap:6px;align-items:center;margin-top:10px;font-size:.6rem}
+.ph .ph-body{padding:10px 12px 8px}
+.ph .ph-tabs{display:flex;border-top:1px solid #F2E8DC;background:#FFF9F2;padding:8px 4px 10px}
+.ph .ph-tabs .tb{flex:1;text-align:center;font-size:.5rem;color:#B79A82;line-height:1.3}
+.ph .ph-tabs .tb i{font-style:normal;font-size:.95rem;display:block}
+.ph .ph-tabs .tb.on{color:#E9812F;font-weight:800}
+.ph .ph-tabs .tb.plus i{background:#F08C3D;color:#fff;width:30px;height:30px;line-height:30px;border-radius:50%;margin:-6px auto 0;font-size:1.1rem}
+.sec-t{font-weight:900;font-size:.66rem;color:#5A4632;margin:8px 0 6px}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.c-hot{background:#FFE9D2;color:#C46A1F;font-weight:700;border-radius:999px;padding:4px 10px;font-size:.56rem}
+.c-cat{background:#FFF6EC;border:1px solid #F3DFC8;color:#8A6B4F;border-radius:999px;padding:4px 10px;font-size:.56rem}
+.ftabs{display:flex;gap:5px;align-items:center;margin:8px 0 6px}
+.ftab{border-radius:999px;padding:4px 10px;font-size:.55rem;color:#9B7B5C;background:#FFF6EC}
+.ftab.on{background:#F08C3D;color:#fff;font-weight:800}
+.filter{margin-left:auto;color:#E9812F;font-weight:800;font-size:.55rem}
+.cats{display:flex;justify-content:space-between;text-align:center;margin:6px 0 4px}
+.cats .ci{font-size:.95rem}
+.cats .ci span{display:block;font-size:.45rem;color:#8A6B4F;margin-top:1px}
+.mgrid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.mcard{border:1px solid #F3E4D3;border-radius:10px;overflow:hidden;background:#fff}
+.mcard .im{height:52px;display:flex;align-items:center;justify-content:center;font-size:1.5rem}
+.mcard .im.a{background:linear-gradient(135deg,#FFE3C2,#FFD1A1)}
+.mcard .im.b{background:linear-gradient(135deg,#E7F0FF,#D6E6FF)}
+.mcard .im.c{background:linear-gradient(135deg,#FBE3EE,#F8D3E4)}
+.mcard .im.d{background:linear-gradient(135deg,#E3F5E9,#D2EEDD)}
+.mcard p{padding:6px 7px 2px;font-size:.55rem;font-weight:700;color:#5A4632;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.mcard .pr{display:flex;justify-content:space-between;padding:0 7px 7px;font-size:.52rem}
+.mcard .pr b{color:#E9812F}
+.mcard .pr span{color:#B79A82}
+/* Before/After 迷你机 */
+.bapair{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.mini{background:#fff;border:1px solid var(--line);border-radius:16px;overflow:hidden;position:relative;
+  font-size:.58rem;box-shadow:0 10px 24px rgba(31,36,48,.08)}
+.mini .mh{background:linear-gradient(135deg,#F6A05C,#EE8434);color:#fff;font-weight:800;font-size:.6rem;padding:8px 10px;display:flex;justify-content:space-between}
+.mini .mb{padding:8px 9px;min-height:150px;display:flex;flex-direction:column;gap:6px}
+.mini .mt{position:absolute;top:6px;left:6px;font-size:.5rem;font-weight:900;padding:2px 8px;border-radius:999px;color:#fff;z-index:2}
+.mini.before .mt{background:#C0392B}.mini.after .mt{background:#2FA36B}
+.mrow{background:#FBF7F2;border:1px solid #F3E4D3;border-radius:8px;padding:6px 8px;color:#6B563F;line-height:1.5}
+.mrow.em{background:#FFF3E4;border-color:#F5D9B8;font-weight:700}
+.mrow.warm{background:#FFF6EC}
+.toast{background:rgba(40,40,40,.85);color:#fff;border-radius:8px;padding:7px 10px;font-size:.55rem;text-align:center;margin:auto}
+.mtabs{display:flex;border-top:1px solid #F2E8DC;background:#FFF9F2;padding:6px 4px;margin-top:auto}
+.mtabs .tb{flex:1;text-align:center;font-size:.45rem;color:#B79A82;line-height:1.2}
+.mtabs .tb i{font-style:normal;display:block;font-size:.8rem}
+.mtabs .tb.on{color:#E9812F;font-weight:800}
+.krow{display:flex;justify-content:space-between;align-items:center}
+.kpill{background:#FFE1C7;color:#C46A1F;border-radius:999px;padding:2px 8px;font-size:.5rem;font-weight:700}
+.tgl{width:26px;height:14px;background:#F08C3D;border-radius:999px;position:relative;flex:none}
+.tgl::after{content:"";position:absolute;right:2px;top:2px;width:10px;height:10px;background:#fff;border-radius:50%}
+/* 便签与讨论板 */
+.board3{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.bcol h4{font-size:.82rem;font-weight:900;margin-bottom:12px;display:flex;gap:8px;align-items:baseline}
+.bcol h4 em{font-style:normal;font-family:var(--mono);font-size:.52rem;color:var(--muted);letter-spacing:.14em}
+.stk{border-radius:8px;padding:10px 12px;font-size:.62rem;line-height:1.6;color:#5C4A1E;
+  box-shadow:2px 3px 0 rgba(31,36,48,.10);margin-bottom:8px}
+.stk.y{background:#FFF3B8;transform:rotate(-.8deg)}
+.stk.g{background:#DDF5E4;transform:rotate(.7deg);color:#2E5C42}
+.stk.b{background:#DDEBFC;transform:rotate(-.5deg);color:#3A4E7E}
+.stk.p{background:#FFE3EE;transform:rotate(.6deg);color:#7E3A5C}
+.stk b{display:block;font-size:.64rem;margin-bottom:3px}
+.bm3{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:8px}
+.bm{border:1px solid var(--line);border-radius:12px;padding:12px;background:#FBFCFE}
+.bm .logo{font-size:1.3rem}
+.bm b{display:block;font-size:.72rem;margin:4px 0}
+.bm p{font-size:.6rem;color:#565D72;line-height:1.65}
+.bm .l{font-family:var(--mono);font-size:.5rem;color:var(--muted);word-break:break-all;margin-top:4px}
+/* 亲和图 */
+.affwrap{overflow-x:auto}
+.aff{display:grid;grid-template-columns:1.15fr repeat(7,1fr);gap:8px;min-width:1080px}
+.src{background:#F5F6FA;border-radius:12px;padding:10px}
+.src h5,.acol h5{font-size:.64rem;font-weight:900;margin-bottom:2px}
+.src .sub,.acol .sub{font-size:.5rem;opacity:.6;margin-bottom:8px}
+.src .stk{font-size:.53rem;padding:7px 8px;margin-bottom:6px}
+.acol{border-radius:12px;padding:10px;min-height:300px}
+.acol .stk{font-size:.55rem;padding:8px 9px;margin-bottom:6px;transform:none;box-shadow:1px 2px 0 rgba(31,36,48,.12)}
+.ac1{background:#EAF2FE;color:#3A4E7E}.ac2{background:#E8F7F1;color:#2E5C42}
+.ac3{background:#FFF6DE;color:#8A6B1F}.ac4{background:#FFEFDD;color:#8A551F}
+.ac5{background:#FFEAF1;color:#7E3A5C}.ac6{background:#FFDFE6;color:#8A2E3E}
+.ac7{background:#F1EAFE;color:#5E3A8E}
+.sum3{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:14px}
+.sum3 .plan-box{font-size:.62rem}
+.flow5{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-top:10px}
+.flow5 .fcell{background:#F5F6FA;border:1px solid var(--line);border-radius:10px;padding:8px 10px;font-size:.6rem}
+.flow5 .arr{color:var(--muted);font-weight:900}
+
+/* 亲和图原始资料条 */
+.evwrap{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin-bottom:16px}
+.ev{border-radius:8px;padding:8px 10px;font-size:.55rem;line-height:1.6;box-shadow:1px 2px 0 rgba(31,36,48,.12)}
+.ev b{font-family:var(--mono);font-size:.5rem;display:block;opacity:.65;margin-bottom:2px}
+.ev.v1{background:#DDEBFC;color:#3A4E7E}
+.ev.v2{background:#DDF5E4;color:#2E5C42}
+.ev.v3{background:#FFF3B8;color:#8A6B1F}
+.ev.v4{background:#FFEFDD;color:#8A551F}
+.ev.v5{background:#FFE3EE;color:#7E3A5C}
+.ev.v6{background:#F1EAFE;color:#5E3A8E}
+.acol{display:flex;flex-direction:column}
+.acol .mode{font-size:.54rem;line-height:1.6;margin-top:auto;padding-top:10px;font-weight:600}
+.ins5{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin-top:16px}
+.ins5 .plan-box{font-size:.6rem}
+.ins5 .plan-box p{margin-top:4px}
+.ins5 .plan-box .ph2{color:#B9BECB;font-size:.52rem}
+
+/* 故事气泡 */
+.story{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(16px,2.4vw,28px)}
+.step{position:relative;padding-top:16px}
+.step .no{width:38px;height:38px;border-radius:50%;display:grid;place-items:center;font-weight:900;
+  font-size:.95rem;color:#fff;margin-bottom:14px;box-shadow:0 10px 20px rgba(31,36,48,.18)}
+.step:nth-child(1) .no{background:var(--blue)}
+.step:nth-child(2) .no{background:var(--pink)}
+.step:nth-child(3) .no{background:var(--green)}
+.bubble{position:relative;background:#fff;border:1px solid var(--line);border-radius:18px;padding:16px 16px 14px;
+  box-shadow:0 14px 30px rgba(31,36,48,.08);font-size:.82rem;color:#3C4254}
+.bubble b{color:var(--ink)}
+.bubble::before{content:"";position:absolute;top:-9px;left:34px;width:16px;height:16px;background:#fff;
+  border-left:1px solid var(--line);border-top:1px solid var(--line);transform:rotate(45deg)}
+.step h3{margin:12px 0 4px}
+.step p{font-size:.78rem;color:var(--muted)}
+
+/* 证据图 */
+.evidence{background:#fff;border:1px solid var(--line);border-radius:22px;padding:clamp(12px,2vw,22px);
+  box-shadow:0 24px 50px rgba(31,36,48,.09)}
+.evidence img{border-radius:12px;width:100%}
+.evidence .cap{display:flex;align-items:center;gap:10px;padding:12px 6px 2px;flex-wrap:wrap}
+.evidence .cap .tag{font-family:var(--mono);font-size:.56rem;letter-spacing:.14em;text-transform:uppercase;
+  background:var(--lav);border-radius:6px;padding:4px 9px;color:#3A4160;font-weight:700}
+.evidence .cap p{font-size:.74rem;color:var(--muted)}
+.duo{display:grid;grid-template-columns:1fr 1fr;gap:clamp(14px,2.4vw,26px);align-items:start}
+.tri{display:grid;grid-template-columns:1fr 1fr;gap:clamp(14px,2.4vw,26px);align-items:stretch}
+
+/* 结论卡 */
+.findings{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:clamp(20px,3vw,30px)}
+.find{background:#fff;border:1px solid var(--line);border-radius:16px;padding:16px;position:relative;overflow:hidden;
+  box-shadow:0 14px 30px rgba(31,36,48,.07)}
+.find::before{content:"";position:absolute;top:0;left:0;right:0;height:4px}
+.find:nth-child(1)::before{background:var(--blue)}
+.find:nth-child(2)::before{background:var(--pink)}
+.find:nth-child(3)::before{background:var(--green)}
+.find h3{font-size:.9rem;margin-bottom:6px}
+.find p{font-size:.76rem;color:#565D72}
+
+/* HMW */
+.hmw{margin-top:clamp(22px,3.2vw,34px);background:linear-gradient(135deg,var(--yellow-soft),#FFF3B8);
+  border:1.5px solid rgba(31,36,48,.25);border-radius:20px;padding:clamp(20px,3.4vw,34px);display:grid;
+  grid-template-columns:auto 1fr;gap:clamp(16px,3vw,36px);align-items:center;position:relative}
+.hmw .arrow{font-size:clamp(1.6rem,3vw,2.4rem);color:#C0392B}
+.hmw .card{background:var(--yellow);border-radius:12px;padding:16px 18px;box-shadow:4px 4px 0 rgba(31,36,48,.2);
+  font-size:.86rem;font-weight:700;line-height:1.7}
+.hmw .card small{display:block;font-family:var(--mono);font-size:.55rem;letter-spacing:.1em;margin-top:8px;color:#6B5A1F;font-weight:600}
+.hmw-flow{display:flex;flex-direction:column;gap:10px}
+.hmw-flow .card{box-shadow:3px 3px 0 rgba(31,36,48,.18)}
+.hmw-flow .card.pov{background:#FFF2C4}
+.hmw-title{grid-column:1/-1;font-size:.8rem;font-weight:900;letter-spacing:.12em;color:#8A7218;text-transform:uppercase;
+  font-family:var(--mono)}
+
+/* 功能结构 */
+.tabs{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin-bottom:clamp(22px,3vw,34px)}
+.tabs .tab{display:flex;flex-direction:column;align-items:center;gap:6px;background:#fff;border:1px solid var(--line);
+  border-radius:16px;padding:14px 22px;min-width:110px;box-shadow:0 12px 26px rgba(31,36,48,.07)}
+.tabs .tab i{font-style:normal;font-size:1.3rem}
+.tabs .tab b{font-size:.8rem}
+.tabs .tab span{font-size:.62rem;color:var(--muted);text-align:center}
+.tabs .tab.hot{border-color:var(--blue);background:var(--blue-soft)}
+
+.gallery{display:grid;grid-template-columns:1fr 1fr;gap:clamp(16px,2.6vw,28px)}
+.shot{background:#fff;border:1px solid var(--line);border-radius:18px;padding:14px;box-shadow:0 18px 36px rgba(31,36,48,.08)}
+.shot img{border-radius:10px;width:100%}
+.shot figcaption{padding-top:10px;font-size:.74rem;color:var(--muted);display:flex;gap:8px;align-items:baseline}
+.shot figcaption b{color:var(--ink);font-size:.78rem;white-space:nowrap}
+
+/* Before & After */
+.ba{display:grid;grid-template-columns:repeat(2,1fr);gap:clamp(16px,2.6vw,28px)}
+.ba figure{background:#fff;border:1px solid var(--line);border-radius:18px;padding:12px;
+  box-shadow:0 18px 36px rgba(31,36,48,.08);display:flex;flex-direction:column;gap:10px}
+.ba img{border-radius:10px;width:100%}
+.ba figcaption{display:flex;gap:9px;align-items:flex-start;padding:0 4px 4px}
+.ba .idx{flex:none;font-family:var(--mono);font-size:.6rem;font-weight:700;color:#fff;background:var(--ink);
+  border-radius:6px;padding:3px 7px;margin-top:2px}
+.ba figcaption p{font-size:.75rem;color:#4A5063;line-height:1.6}
+.ba figcaption p b{color:var(--ink)}
+.ba-wrap{display:grid;grid-template-columns:repeat(2,1fr);gap:clamp(16px,2.6vw,28px)}
+
+/* Before & After：5 机横排 + 一条贯通竖线（v3） */
+.ba5-scroll{overflow-x:auto;overflow-y:hidden}
+.ba5-stage{position:relative;min-width:940px;padding:26px 0;--pos:50%;
+  user-select:none;-webkit-user-select:none}
+.ba5-labels{display:flex;justify-content:space-between;align-items:center;margin:0 4px 20px}
+.ba5-lb{font-family:var(--mono);font-size:.62rem;letter-spacing:.12em;font-weight:800;
+  border:1.5px solid;border-radius:999px;padding:5px 16px;background:transparent}
+.ba5-lb.after{border-color:#2FA36B;color:#2FA36B}
+.ba5-lb.before{border-color:#C0392B;color:#C0392B}
+.ba5-rows{position:relative;touch-action:pan-y;cursor:ew-resize}
+.ba5-row{display:grid;grid-template-columns:repeat(5,1fr);gap:clamp(4px,.8vw,12px);align-items:start}
+.ba5-row img{display:block;width:100%;height:auto;pointer-events:none;-webkit-user-drag:none}
+.ba5-row.after{position:absolute;inset:0;clip-path:inset(0 calc(100% - var(--pos)) 0 0)}
+.ba5-line{position:absolute;top:-20px;bottom:-20px;left:var(--pos);width:2px;
+  background:var(--ink);transform:translateX(-50%);z-index:5;pointer-events:none}
+.ba5-handle{pointer-events:auto;position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
+  width:42px;height:42px;border-radius:50%;background:#fff;border:1.5px solid var(--ink);
+  box-shadow:0 6px 18px rgba(31,36,48,.18);cursor:ew-resize;padding:0;
+  display:flex;align-items:center;justify-content:center;font-size:1rem;font-weight:800;color:var(--ink)}
+.ba5-handle:focus-visible{outline:3px solid var(--blue);outline-offset:3px}
+.ba5-hint{text-align:center;color:var(--muted);font-size:.72rem;margin:18px 0 0}
+@media (max-width:960px){.ba5-stage{min-width:820px}}
+
+/* 下一步 */
+.next-steps{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.next-card{background:#fff;border:1px solid var(--line);border-radius:16px;padding:16px;box-shadow:0 14px 30px rgba(31,36,48,.07)}
+.next-card .k{font-family:var(--mono);font-size:.55rem;letter-spacing:.16em;color:var(--blue);text-transform:uppercase;font-weight:700}
+.next-card h3{margin:6px 0 4px;font-size:.9rem}
+.next-card p{font-size:.74rem;color:#565D72}
+
+footer{border-top:1px solid var(--line);padding:34px 0 46px;text-align:center;color:var(--muted);font-size:.7rem}
+footer b{color:var(--ink)}
+
+/* 进场 */
+.rv{opacity:0;transform:translateY(18px);transition:opacity .7s ease,transform .7s ease}
+.rv.in{opacity:1;transform:none}
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  .rv{opacity:1;transform:none;transition:none}
+  .phone,.float-chip{animation:none}
+}
+
+@media (max-width:960px){
+  .hero-grid{grid-template-columns:1fr;gap:40px}
+  .metrics{grid-template-columns:1fr 1fr}
+  .story{grid-template-columns:1fr}
+  .duo,.tri,.gallery,.ba,.ba-wrap{grid-template-columns:1fr}
+  .findings,.next-steps{grid-template-columns:1fr}
+  .hmw{grid-template-columns:1fr}
+  .fc3{right:-2%}
+  .nav .links{display:none}
+  .fn-grid{grid-template-columns:1fr 1fr}
+  .word4{grid-template-columns:1fr 1fr}
+  .plan{grid-template-columns:1fr}
+}
+@media (max-width:640px){
+  table.cmp{display:block;overflow-x:auto;white-space:normal}
+  .fn-grid,.word4{grid-template-columns:1fr}
+  .emap{grid-template-columns:1fr}
+  .emap .pg{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="logo"><span class="egg">🪿</span>闲鹅 · 产品故事</div>
+  <div class="links">
+    <a href="#idea">想法诞生</a>
+    <a href="#research">讨论调研</a>
+    <a href="#insight">洞察收敛</a>
+    <a href="#build">网页落地</a>
+    <a href="#iterate">测试升级</a>
+    <a href="#next">下一步</a>
+  </div>
+  <a class="cta" href="#iterate">看 2.0 → 3.0</a>
+</nav>
+
+<!-- ============ HERO ============ -->
+<section class="hero">
+  <div class="wrap hero-grid">
+    <div class="hero-copy rv">
+      <span class="pill"><i></i>校园二手闲置平台 · 2026 · 已上线迭代中</span>
+      <h1>重新设计<br><span class="b">「校园二手交易」</span><br>的<em class="g" style="font-style:normal">每一道坎</em></h1>
+      <p class="lede">
+        这是「闲鹅」——一个面向大学生的校园二手闲置平台——从<b>最初的想法</b>，到团队讨论、问卷访谈，
+        再到<b>网页与 App 落地</b>、真实测试与<b>2.0 → 3.0 升级</b>的完整过程记录。
+        我们想把「定价难、消息被刷走、沟通费劲」这些买卖二手时真实的坎，一个个搬走。
+      </p>
+      <div class="hero-metrics">
+        <div class="chip b"><div class="v">120+</div><div class="k">计划问卷</div></div>
+        <div class="chip p"><div class="v">8–10</div><div class="k">深度访谈</div></div>
+        <div class="chip"><div class="v">2.0→3.0</div><div class="k">版本迭代</div></div>
+        <div class="chip g"><div class="v">12+</div><div class="k">功能升级</div></div>
+      </div>
+    </div>
+    <div class="hero-stage rv">
+      <span class="dot-deco dd1"></span><span class="dot-deco dd2"></span>
+      <div class="phone">
+        <div class="ph">
+          <div class="ph-head">
+            <div class="ph-title"><span>&#8249; 搜索闲置</span></div>
+            <div class="sbar">🔍 搜索闲置物品</div>
+          </div>
+          <div class="ph-body">
+            <div class="sec-t">🔥 热门搜索</div>
+            <div class="chips">
+              <span class="c-hot">耳机</span><span class="c-hot">考研笔记</span><span class="c-hot">收纳箱</span>
+              <span class="c-hot">雨伞</span><span class="c-hot">充电宝</span><span class="c-hot">卫衣</span>
+              <span class="c-hot">泡面</span><span class="c-hot">cos</span>
+            </div>
+            <div class="sec-t" style="margin-top:12px">📁 按分类挑选</div>
+            <div class="chips">
+              <span class="c-cat">教材书籍</span><span class="c-cat">电子数码</span><span class="c-cat">生活用品</span>
+              <span class="c-cat">服饰鞋包</span><span class="c-cat">文体用品</span><span class="c-cat">宿舍家具</span>
+              <span class="c-cat">美妆杂物</span><span class="c-cat">食品零食</span><span class="c-cat">二次元周边</span>
+              <span class="c-cat">其他闲置</span>
+            </div>
+            <div class="sec-t" style="margin-top:12px">搜索历史</div>
+            <p style="font-size:.56rem;color:#B79A82">暂无记录，搜过的关键词会出现在这里</p>
+          </div>
+          <div class="ph-tabs">
+            <span class="tb"><i>🏠</i>首页</span><span class="tb"><i>▦</i>广场</span>
+            <span class="tb plus"><i>＋</i>发布</span><span class="tb"><i>🔔</i>消息</span><span class="tb"><i>👤</i>我的</span>
+          </div>
+        </div>
+      </div>
+      <div class="float-chip fc1"><b>AI 识别</b><small>拍照自动生成标签与描述</small></div>
+      <div class="float-chip fc2"><b>驿站自提</b><small>东门驿站 · 顺路取货</small></div>
+      <div class="float-chip fc3"><b>偏好匹配</b><small>按浏览与交易偏好推荐</small></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 指标带 ============ -->
+<section style="padding-top:0">
+  <div class="wrap">
+    <div class="metrics rv">
+      <div class="metric">
+        <div class="v">120+</div><div class="t">计划回收问卷</div>
+        <div class="d">线上问卷 + 微访谈组合，覆盖不同年级、不同院系</div>
+        <svg viewBox="0 0 100 34"><polyline points="4,28 22,24 40,25 58,17 76,12 96,6"/><circle cx="96" cy="6" r="3"/></svg>
+      </div>
+      <div class="metric">
+        <div class="v">8–10</div><div class="t">深度访谈对象</div>
+        <div class="d">围绕「最近一次交易」还原完整路径</div>
+        <svg viewBox="0 0 100 34"><polyline points="4,26 22,22 40,18 58,19 76,10 96,7"/><circle cx="96" cy="7" r="3"/></svg>
+      </div>
+      <div class="metric">
+        <div class="v">7 组</div><div class="t">亲和图主题分组</div>
+        <div class="d">对 25 条原话逐条编码、归类收敛</div>
+        <svg viewBox="0 0 100 34"><polyline points="4,28 22,26 40,20 58,14 76,10 96,5"/><circle cx="96" cy="5" r="3"/></svg>
+      </div>
+      <div class="metric">
+        <div class="v">12+</div><div class="t">2.0 → 3.0 升级点</div>
+        <div class="d">来自真实使用的反馈与测试发现</div>
+        <svg viewBox="0 0 100 34"><polyline points="4,27 22,23 40,16 58,12 76,8 96,4"/><circle cx="96" cy="4" r="3"/></svg>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 01 想法诞生 ============ -->
+<section id="idea">
+  <div class="wrap">
+    <div class="sec-head rv">
+      <span class="kicker">01 · Where it started</span>
+      <h2>一切从<span class="b">「卖不出去的闲置」</span>开始</h2>
+      <p class="lede">
+        每个宿舍角落都堆着「懒得卖」的东西：教材、台灯、小家电。不是不想卖，而是
+        <b>定价没参照、消息被刷走、和陌生人沟通太费劲</b>。我们把这些原话写成 POV，再转成 HMW。
+      </p>
+    </div>
+
+    <div class="hmw rv">
+      <span class="hmw-title">POV → HMW · 问题的重新定义</span>
+      <div class="hmw-flow">
+        <div class="card pov">POV：大学生想出售二手闲置物品的时候遇到<b>定价难</b>、关注市场难——二手消息容易被刷走，买卖家双方沟通困难。<small>POV · 115 刘芸熙</small></div>
+        <div class="card pov">HMW：如何让校园二手物品出售<b>更加高效</b>？<small>HMW · 115 刘芸熙</small></div>
+      </div>
+      <span class="arrow">→</span>
+      <div class="card">我们可以怎样，让大学生在买卖二手闲置物品时<b>流程更高效、沟通更顺畅、售后更省心</b>？<small>DESIGN QUESTION · 项目组讨论收敛</small></div>
+    </div>
+
+    <div class="story" style="margin-top:clamp(24px,3.4vw,40px)">
+      <div class="step rv">
+        <span class="no">1</span>
+        <div class="bubble"><b>「这个到底值多少钱？」</b>定价没有参照物，只能凭感觉，最后要么卖不掉，要么贱卖。</div>
+        <h3>定价的焦虑</h3>
+        <p>来自宿舍夜谈的真实抱怨，也是问卷里被提到最多的痛点。</p>
+      </div>
+      <div class="step rv">
+        <span class="no">2</span>
+        <div class="bubble"><b>「刚发的消息被刷走了。」</b>群里一条转让消息几分钟就沉底，想找某样东西只能翻聊天记录。</div>
+        <h3>消失的信息</h3>
+        <p>熟人渠道有信任，但信息无法沉淀、无法检索。</p>
+      </div>
+      <div class="step rv">
+        <span class="no">3</span>
+        <div class="bubble"><b>「约了三次都没遇上。」</b>和陌生人约面交、砍价、售后，每一步都在消耗耐心。</div>
+        <h3>沟通的成本</h3>
+        <p>大平台解决「买得到」，却没解决「今天下午顺路拿到」。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 02 讨论调研 ============ -->
+<section id="research" style="background:linear-gradient(180deg,rgba(228,231,249,.5),transparent 30%)">
+  <div class="wrap">
+    <div class="sec-head rv">
+      <span class="kicker">02 · Discuss &amp; Research</span>
+      <h2>先<span class="p">拆竞品</span>，再<span class="b">问对人</span></h2>
+      <p class="lede">
+        讨论从三件事开始：竞品到底解决了哪一段、问卷该怎么问、别人已经做到了哪里。
+        工具的目的不是收集答案，而是尽快排除错误的假设。
+      </p>
+    </div>
+
+    <div class="fn-card rv">
+      <div class="fn-head"><h3>竞品对比表</h3><span class="sub">Competitive Analysis · Field Notes</span></div>
+      <div class="fn-body">
+        <p style="font-size:.66rem;color:var(--muted);margin-bottom:10px">
+          姓名 / 组名：丁雯静 · 选题：校园二手平台 · 核心用户任务：三个方案比较同一个任务（例：找到一个现在能用的自习位置）
+        </p>
+        <table class="cmp">
+          <thead>
+            <tr>
+              <th style="width:112px">比较维度<small>Dimension</small></th>
+              <th>直接竞品<small>相同问题 · 类似产品</small></th>
+              <th>间接竞品<small>相似需求 · 不同方式</small></th>
+              <th>替代方案<small>用户现在怎么解决</small></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><th>产品名称<small>Name</small></th>
+              <td><b>咸鱼、转转</b></td>
+              <td><b>小红书</b></td>
+              <td><b>QQ、微信二手物品群</b></td></tr>
+            <tr><th>目标用户<small>Who</small></th>
+              <td>为二手出售的人</td>
+              <td>年轻人</td>
+              <td>同学</td></tr>
+            <tr><th>核心问题<small>What</small></th>
+              <td>通过官方平台有保障地出售二手物品（二手电子产品），了解市场价格</td>
+              <td>发帖询问市场需求，浏览类似物品需求</td>
+              <td>方便同校出物，没有平台赚取手续费，没有邮费</td></tr>
+            <tr><th>关键流程<small>How</small></th>
+              <td><ol><li>实名认证登录 → 点「＋」发闲置</li><li>上传物品图，填标题、成色、定价、配送方式（快递 / 自提）</li><li>发布上架，等待咨询议价</li><li>买家拍下付款 → 沟通，发货 / 线下当面交付</li><li>买家确认收货 → 收款</li></ol></td>
+              <td><ol><li>账号登录（满足条件、开通个人售卖）</li><li>发布图文笔记，可挂上商品卡</li><li>用户评论 / 私信询问议价</li><li>买家在小红书站内拍下付款（平台担保）</li><li>约定快递 / 自提，交付物品</li><li>买家确认收货，卖家收款</li></ol></td>
+              <td><ol><li>入群</li><li>了解群内物品定价</li><li>群内发物品图文</li><li>私聊协商</li><li>线下当面转账交付</li></ol></td></tr>
+            <tr><th>做得好<small>Experience</small></th>
+              <td>商品基数大，担保交易</td>
+              <td>有平台保障，二次元、追星周边圈层曝光好</td>
+              <td>无平台手续费，自理便捷</td></tr>
+            <tr><th>不足<small>Experience</small></th>
+              <td>用户混杂，帖子易下沉，本校比价难，平台手续费</td>
+              <td>重图文包装，无同校分区，交易流程割裂</td>
+              <td>消息快速被刷走，需反复刷屏；无分类检索、比价功能；无交易担保</td></tr>
+          </tbody>
+        </table>
+
+        <div class="fn-head2"><h4>待验证的设计机会</h4><span>Opportunity</span></div>
+        <div class="fn-grid">
+          <div class="fn-mini"><b><span class="idx">现象</span>发现现象</b><p>大学生校内闲置交易渠道分散，拼单、代取等需求无法统一解决。</p></div>
+          <div class="fn-mini"><b><span class="idx">问题</span>识别问题</b><p>现有渠道普遍存在帖子易沉没、同校比价困难、功能割裂、交易风险等痛点。</p></div>
+          <div class="fn-mini"><b><span class="idx">机会</span>提出机会</b><p>搭建本校专属平台，闲置比价为核心，整合拼单、代取快递等校内服务。</p></div>
+          <div class="fn-mini"><b><span class="idx">验证</span>验证假设</b><p>通过问卷、用户访谈验证需求真实性。</p></div>
+        </div>
+        <p style="font-size:.62rem;color:var(--muted);margin-top:12px">※ 比较时记录操作步骤、截图和体验依据，区分观察事实与推测；不能实际体验时标注「待核实」。</p>
+
+        <div class="fn-head2"><h4>这张表怎么用</h4><span>How to use</span></div>
+        <div class="fn-grid">
+          <div class="fn-mini"><b><span class="idx">1</span>明确赛道</b><p>先写清楚你做的产品、目标用户和核心问题。<em>别急着找竞品。</em></p></div>
+          <div class="fn-mini"><b><span class="idx">2</span>找 3–5 款竞品</b><p>记住：竞品不一定是一项产品——相似产品是<b>直接竞品</b>，相同需求不同方式是<b>间接竞品</b>，用户手动替代是<b>替代方案</b>。</p></div>
+          <div class="fn-mini"><b><span class="idx">3</span>拆入表格</b><p>按用户、问题、流程、好与不足逐行拆，不要只罗列功能。</p></div>
+          <div class="fn-mini"><b><span class="idx">4</span>写结论，不保平安</b><p>每个格子都标注「待验证的设计机会」，<em>对比的终点是判断。</em></p></div>
+        </div>
+        <div class="fn-head2"><h4>四种常见错误</h4><span>Common mistakes</span></div>
+        <table class="pit">
+          <thead><tr><th style="width:150px">错误类型</th><th>常见写法 ✗</th><th>改进写法 ✓</th></tr></thead>
+          <tbody>
+            <tr><td class="kind">只看功能，不看策略</td><td class="bad">整个表格都在罗列竞品有什么功能</td><td class="good">标注每项功能背后要达成的目标</td></tr>
+            <tr><td class="kind">只做对比，不做判断</td><td class="bad">把「谁更好」写成小作文</td><td class="good">用「做得好 / 不足 / 机会」三栏下结论</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="fn-cap"><span class="tag">Extracted</span>
+        <p>由调研板「竞品分析模板 + 竞品对比表」重建为网页表格，非截图。</p>
+      </div>
+    </div>
+
+    <div class="fn-card rv" style="margin-top:clamp(18px,2.8vw,30px)">
+      <div class="fn-head"><h3>问卷话术模板</h3><span class="sub">Survey Script · Field Notes</span></div>
+      <div class="fn-body">
+        <div class="fn-head2" style="margin-top:0"><h4>调研目标</h4><span>Research goals</span></div>
+        <div class="fn-grid" style="grid-template-columns:1fr 1fr 1fr">
+          <div class="fn-mini"><b><span class="idx">01</span>摸清真实痛点</b><p>现有二手微信群、闲鱼的使用麻烦点——邮费、自提、定价难、交易信任问题。</p></div>
+          <div class="fn-mini"><b><span class="idx">02</span>验证两个核心功能</b><p>① 校内寝室点点跑腿代送；② 历史成交记录辅助定价——看学生是否愿意使用。</p></div>
+          <div class="fn-mini"><b><span class="idx">03</span>支撑设计决策</b><p>收集二手品类、交易习惯、信任顾虑、付费意愿，为功能优先级、界面设计提供依据。</p></div>
+        </div>
+
+        <div class="plan" style="margin-top:16px">
+          <div>
+            <div class="plan-box">
+              <h5>调研方法说明<span class="tag">Method</span></h5>
+              <p><b>组合使用【线上问卷 + 微访谈】</b></p>
+              <p><b>问卷：</b>面向大范围在校生，快速统计整体偏好、使用频率、价格接受度，适合量化数据。</p>
+              <p><b>访谈：</b>挑选有二手买卖经验的同学深度聊天，挖掘问卷看不到的细节——比如跑腿安全顾虑、定价时的纠结、担心被骗等隐性问题。</p>
+            </div>
+            <div class="opening" style="margin-top:12px"><b>开场说明 ·</b> 你好！我们是【××大学】Feeling Futures 课程的学生，正在做一个关于【大学生闲置】的小调研，想占用你大约【3】分钟。回答没有对错，只用于课程作业，不会写你的名字。如果哪个问题不想答，随时可以跳过。</div>
+            <div class="fn-head2"><h4>四种题目句式</h4><span>Question patterns</span></div>
+            <div class="fn-grid" style="grid-template-columns:1fr 1fr">
+              <div class="fn-mini"><b><span class="idx">问数量</span>HOW MANY</b><p>每周几次？了解使用强度——<em>过去【1 周】内，有几次【浏览 / 发布闲置】？</em></p></div>
+              <div class="fn-mini"><b><span class="idx">问频率</span>HOW OFTEN</b><p>限定时间范围——<em>最近【1 个月】里，【搜寻闲置】几次？</em></p></div>
+              <div class="fn-mini"><b><span class="idx">问程度</span>HOW MUCH</b><p>判断态度强度——<em>你觉得【闲置定价难】问题严重吗？（1–5 分）</em></p></div>
+              <div class="fn-mini"><b><span class="idx">问感受</span>HOW SATISFIED</b><p>比较参照系——<em>和【其他二手渠道】比，你满意度打几分？（1–5 分）</em></p></div>
+            </div>
+          </div>
+          <div>
+            <div class="plan-box">
+              <h5>执行安排<span class="tag">Field plan</span></h5>
+              <p><b>调研对象：</b>本校在校本科生、研究生。问卷计划回收 <b>120 份以上</b>，覆盖不同年级、不同院系；访谈 <b>8~10 人</b>，筛选经常在二手群 / 闲鱼买卖闲置、愿意尝试校内跑腿的同学。</p>
+              <p><b>调研地点：</b>问卷——微信朋友圈、班级群、校园闲置群线上发放；访谈——线下空闲教室 / 校园安静长椅，或线上语音。</p>
+              <ol>
+                <li><b>第 1 天：</b>编写问卷题目、整理访谈提纲</li>
+                <li><b>第 2–3 天：</b>投放问卷，同步邀约访谈对象，开展访谈、录音记录（征得同意）</li>
+                <li><b>第 4 天：</b>整理问卷数据、转录访谈要点，汇总问题和需求</li>
+              </ol>
+              <p><b>分工：</b>主负责人——统筹进度、邀约访谈对象、整理最终调研报告；记录员——访谈文字记录、整理问卷回收数据与原始材料。</p>
+            </div>
+            <div class="plan-box" style="margin-top:12px">
+              <h5>调研核心问题方向<span class="tag">Key questions</span></h5>
+              <p><b>问卷重点：</b>是否买 / 卖过校园闲置、平时在哪交易、最讨厌什么问题；是否愿意寝室点点配送；能接受的跑腿费用；会不会参考历史成交定价；担心哪些风险（物品损坏、跑腿人员安全、交易纠纷）。</p>
+              <p><b>访谈重点：</b>交易踩过什么坑；如果有跑腿，下单和收货最在意什么；定价一般怎么估；对 App 还有什么额外期待。</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="fn-head2"><h4>四种最常见的坑</h4><span>Common traps</span></div>
+        <table class="pit">
+          <thead><tr><th style="width:120px">坑</th><th>常见写法 ✗</th><th>改进写法 ✓</th></tr></thead>
+          <tbody>
+            <tr><td class="kind">一题问两件事</td><td class="bad">「发布 & 沟通 & 你会觉得麻烦吗？」</td><td class="good">拆开问：发布麻烦吗？沟通麻烦吗？</td></tr>
+            <tr><td class="kind">选项不周全</td><td class="bad">「使用频率：1–3 / 3–5 / 5 次以上」（漏了 0 次）</td><td class="good">加「0 次」，覆盖不使用者</td></tr>
+            <tr><td class="kind">带倾向的选项</td><td class="bad">「它是非常好用还是太难用？」（暗示难用）</td><td class="good">改中性：使用中经常遇到哪些问题？</td></tr>
+            <tr><td class="kind">问未来不问过去</td><td class="bad">「以后会经常用这个 App 吗？」</td><td class="good">问真实行为：你最近一次没买成的东西是什么？</td></tr>
+          </tbody>
+        </table>
+
+        <div class="fn-head2"><h4>发出前，记住 4 个字</h4><span>Before sending</span></div>
+        <div class="word4">
+          <div class="w4"><div class="zi">一</div><p><b>一题一问</b><br>一个问题，只问一件事</p></div>
+          <div class="w4"><div class="zi">全</div><p><b>选项周全</b><br>不重叠、覆盖所有情况，留「其他」</p></div>
+          <div class="w4"><div class="zi">中</div><p><b>保持中立</b><br>不暗示答案，不带预设判断</p></div>
+          <div class="w4"><div class="zi">真</div><p><b>真问具体</b><br>问真实发生的事，不问想象</p></div>
+        </div>
+
+        <div class="fn-head2"><h4>读数据时的提醒</h4><span>Data worries</span></div>
+        <div class="fn-grid">
+          <div class="fn-mini"><b>数量 ≠ 代言</b><p>100 份不等于全校的代表性——实训题：问卷到底发给了谁？</p></div>
+          <div class="fn-mini"><b>警惕样本偏差</b><p>只在社群发问卷，结果更能代表「活跃的那群人」。</p></div>
+          <div class="fn-mini"><b>相关 ≠ 因果</b><p>「点外卖多的同学不太去第一饭堂」不构成结论。</p></div>
+          <div class="fn-mini"><b>不爱回答要谨慎</b><p>30 人没回答的题，可能是问题模糊、羞于开口，别直接计入平均。</p></div>
+        </div>
+
+        <div class="fn-head2"><h4>问卷提交卡 · 五个测量板块</h4><span>Question card · 试填 30 人后修订投放</span></div>
+        <div class="plan" style="grid-template-columns:1fr">
+          <div class="plan-box">
+            <ol>
+              <li><b>一、基础背景信息（用户画像）</b>——年级；在校闲置出售 / 收物频率（从不 / 一学期 1–2 次 / 每月 1 次 / 每月多次）；是否参与过校内拼单、是否使用过代取快递服务。</li>
+              <li><b>二、现有渠道使用情况（闲鱼 / 转转 / 小红书 / 校园二手群）</b>——常用渠道（多选）；在该渠道遇到痛点的困扰程度（李克特 5 分）：帖子很快被刷下去需反复重发 · 难查本校同类闲置参考价、定价困难 · 校外无关人员过多 · 平台手续费 / 快递成本高 · 交易缺少保障担心被骗 · 拼单代取要换到别的软件 / 群聊操作很麻烦。</li>
+              <li><b>三、核心功能需求测量（5 分打分）</b>——仅限本校学生登录的闲置交易板块；发布闲置时自动查看本校同类商品历史成交价作为定价参考（核心卖点）；校内拼单板块（零食、周边、二次元 / 追星团购）；校内代取快递互助板块；校内定点自提交易方式。</li>
+              <li><b>四、产品接受意愿测量</b>——如果有本校专属一体化平台，是否愿意尝试使用；相比闲鱼 / 二手群优先选择本校平台的原因（多选）；可接受的平台形式（微信小程序 / App / 网页端）。</li>
+              <li><b>五、风险与顾虑测量</b>——使用本校平台最担心的问题（信息泄露、没人用、交易纠纷、功能不好用等）。</li>
+            </ol>
+          </div>
+        </div>
+      </div>
+      <div class="fn-cap"><span class="tag">Extracted</span>
+        <p>由调研板「问卷话术模板（两页）+ 执行计划 + 问卷提交卡」重建为网页内容，非截图。</p>
+      </div>
+    </div>
+
+    <div class="fn-card rv" style="margin-top:clamp(18px,2.8vw,30px)">
+      <div class="fn-head"><h3>团队讨论板</h3><span class="sub">Ideas &amp; Benchmark</span></div>
+      <div class="fn-body">
+        <div class="board3">
+          <div class="bcol">
+            <h4>成员想法<em>Members</em></h4>
+            <div class="stk y"><b>想法 1</b>做一个校内二手小程序，全校买卖闲置都装进一个 App，不用再混在群里。</div>
+            <div class="stk y"><b>想法 2</b>资金托管担保交易——确认收货后再放款，买卖双方都放心。</div>
+            <div class="stk y"><b>想法 3</b>定价要有参照：同校同类商品的成交价直接摆出来。</div>
+            <div class="stk y"><b>想法 4</b>固定点位当面验货（东门驿站），顺路交货不走快递。</div>
+          </div>
+          <div class="bcol">
+            <h4>AI 想法<em>AI Ideas</em></h4>
+            <div class="stk g"><b>整合分散的渠道</b>校园闲置交易渠道分散——统一到一个数字化平台：集中发布、担保交易、约定时间地点交付。</div>
+            <div class="stk g"><b>降低交易摩擦</b>资金托管 + 物流/自提衔接，如何让管理提速，交易更简化高效。</div>
+          </div>
+          <div class="bcol">
+            <h4>落地的现实项目<em>Benchmark</em></h4>
+            <div class="stk b"><b>Gali · 校园托管担保交易平台</b>专门面向学生：资金托管，约定在校内固定点位当面验货，确认无误才放款，纠纷在交接点处理。</div>
+            <div class="stk b"><b>校闲荟 · 大学生创新项目</b>校园小程序：资金托管、校内纠纷仲裁、信息发布，亮点是 VR 看货。</div>
+            <div class="stk b"><b>咸鱼 AI 功能</b>拍照识别物品，自动生成标题与描述——发布成本几乎归零。</div>
+          </div>
+        </div>
+      </div>
+      <div class="fn-cap"><span class="tag">Rebuilt</span>
+        <p>由讨论板内容重新排版为网页便签，非截图。</p>
+      </div>
+    </div>
+
+    <div class="findings rv">
+      <article class="find"><h3>大平台赢在流量，输在「最后一公里」</h3>
+        <p>物流与快递对几十块的旧教材太重；「今天下午顺路拿到」才是校园高频场景。</p></article>
+      <article class="find"><h3>熟人渠道有信任，缺结构</h3>
+        <p>微信群消息无法沉淀、不可检索、没有担保；信任是现成的，缺的是工具。</p></article>
+      <article class="find"><h3>机会 = 校内身份 + 自提 + AI</h3>
+        <p>学号认证建立信任，驿站自提顺路交付，AI 识别降低发布成本——三者叠起来才成立。</p></article>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 03 洞察收敛 ============ -->
+<section id="insight">
+  <div class="wrap">
+    <div class="sec-head rv">
+      <span class="kicker">03 · Synthesis</span>
+      <h2>把 25 条原话，<span class="g">贴成一张地图</span></h2>
+      <p class="lede">用户旅程地图还原一个人的语境，亲和图找出多数人的共性——每条设计决策都能对应回某张便签。</p>
+    </div>
+
+    <div class="fn-card rv">
+      <div class="fn-head"><h3>用户旅程地图 · 买卖二手物品</h3><span class="sub">Journey Map · Field Notes</span></div>
+      <div class="fn-body">
+        <div class="jinfo">
+          <div class="card"><span class="av">🙄</span><div><b>用户名</b><p>小陈 · 20 岁<br>在校大学生</p></div></div>
+          <div class="card"><span class="av">🛒</span><div><b>场景</b><p>买卖二手物品</p></div></div>
+          <div class="card"><span class="av">🎯</span><div><b>预期</b><p>高效买卖二手物品</p></div></div>
+        </div>
+
+        <div class="jscroll">
+          <div class="jgrid">
+            <div class="jlab">阶段</div>
+            <div class="jstage">第一阶段</div><div class="jstage">第二阶段</div><div class="jstage">第三阶段</div>
+
+            <div class="jlab">目标</div>
+            <div class="jgoal">找东西</div><div class="jgoal">联系对方</div><div class="jgoal">沟通价格</div>
+            <div class="jgoal">付款</div><div class="jgoal">等待物流</div><div class="jgoal">收货检查</div>
+
+            <div class="jlab">想法</div>
+            <div class="jcell say">「哪个平台上东西价格更低」</div>
+            <div class="jcell say">「等待回复，商品到底卖没卖给别人」</div>
+            <div class="jcell say">「能不能快点确定，能不能砍一点价格」</div>
+            <div class="jcell say">「这价格合不合适心里，运费是否能接受」</div>
+            <div class="jcell say">「物品能不能快点到」</div>
+            <div class="jcell say">「商品有没有破损，不想要售后，很麻烦」</div>
+
+            <div class="jlab">行为</div>
+            <div class="jcell"><span class="jchip">去各个平台上浏览，对比价格</span></div>
+            <div class="jcell"><span class="jchip">发起对话</span></div>
+            <div class="jcell"><span class="jchip">沟通</span></div>
+            <div class="jcell"><span class="jchip">付款</span></div>
+            <div class="jcell"><span class="jchip">等待收货</span></div>
+            <div class="jcell"><span class="jchip">收货，检查商品</span></div>
+
+            <div class="jlab">接触点</div>
+            <div class="jcell touch">在网上浏览想要的二手物品，但是平台推送不准确</div>
+            <div class="jcell touch">与多方沟通价格、运费，但是消息提醒混杂</div>
+            <div class="jcell touch">找到心意卖家后，平台提醒消息</div>
+            <div class="jcell touch">付钱后，平台赚取中介费</div>
+            <div class="jcell touch">催发货，平台显示物流速度</div>
+            <div class="jcell touch">平台提醒到货，可以售后</div>
+
+            <div class="jlab">问题</div>
+            <div class="jcell prob">看到随意定价的人，找不到想买的物品</div>
+            <div class="jcell prob">问了对方有没有货，对方已读不回，不知道什么意思</div>
+            <div class="jcell prob">谈价过程中对方下架消失</div>
+            <div class="jcell prob">付款时发现总额加运费，纠结要不要买</div>
+            <div class="jcell prob">等待时间有点久</div>
+            <div class="jcell prob">货物到手发现有运输破损或物品问题，找卖家售后没有回复、没有好的解决方案</div>
+
+            <div class="jlab">情绪</div>
+            <div class="jemo"><svg viewBox="0 0 100 30" preserveAspectRatio="none"><path d="M8,12 C 17,14 20,20 25,21 S 37,12 42,13 S 54,23 58,22 S 72,24 75,23 S 87,26 92,26"/></svg><span class="e">😐</span><span class="t">平静</span></div>
+            <div class="jemo"><svg viewBox="0 0 100 30" preserveAspectRatio="none"><path d="M8,12 C 17,14 20,20 25,21 S 37,12 42,13 S 54,23 58,22 S 72,24 75,23 S 87,26 92,26"/></svg><span class="e">😟</span><span class="t">焦虑</span></div>
+            <div class="jemo"><svg viewBox="0 0 100 30" preserveAspectRatio="none"><path d="M8,12 C 17,14 20,20 25,21 S 37,12 42,13 S 54,23 58,22 S 72,24 75,23 S 87,26 92,26"/></svg><span class="e">😐</span><span class="t">平静</span></div>
+            <div class="jemo"><svg viewBox="0 0 100 30" preserveAspectRatio="none"><path d="M8,12 C 17,14 20,20 25,21 S 37,12 42,13 S 54,23 58,22 S 72,24 75,23 S 87,26 92,26"/></svg><span class="e">😠</span><span class="t">不满</span></div>
+            <div class="jemo"><svg viewBox="0 0 100 30" preserveAspectRatio="none"><path d="M8,12 C 17,14 20,20 25,21 S 37,12 42,13 S 54,23 58,22 S 72,24 75,23 S 87,26 92,26"/></svg><span class="e">😢</span><span class="t">难过</span></div>
+            <div class="jemo"><svg viewBox="0 0 100 30" preserveAspectRatio="none"><path d="M8,12 C 17,14 20,20 25,21 S 37,12 42,13 S 54,23 58,22 S 72,24 75,23 S 87,26 92,26"/></svg><span class="e">😫</span><span class="t">崩溃</span></div>
+
+            <div class="jlab">机会</div>
+            <div class="jcell opp">精准推送，分类物品，拼热门物品</div>
+            <div class="jcell opp">有效消息显示，标记已读</div>
+            <div class="jcell opp">分类用户，可选择相同用户买卖，出现拉黑</div>
+            <div class="jcell opp">严格审查卖家资质设置，同城价格必须小于某个数</div>
+            <div class="jcell opp">校内平台服务范围小，配送快</div>
+            <div class="jcell opp">加入售后服务</div>
+          </div>
+        </div>
+      </div>
+      <div class="fn-cap"><span class="tag">Extracted</span>
+        <p>由调研板「用户旅程地图」逐格提取重建为网页表格（小陈 · 20 岁 · 在校大学生），非截图。</p>
+      </div>
+    </div>
+
+    <div class="fn-card rv" style="margin-top:clamp(18px,2.8vw,30px)">
+      <div class="fn-head"><h3>同理心地图 · 校内二手交易平台</h3><span class="sub">Empathy Map · 每位典型受访者一张</span></div>
+      <div class="fn-body">
+        <div class="emap">
+          <span class="core">受访者 01 · 小陈 · 20 岁 · 访谈日期 11.8 · 记录 丁雯静</span>
+          <div class="q blue">
+            <h4><b>FEELS</b>感受什么</h4>
+            <div class="notes">
+              <div class="note">① 来回等回复，消耗耐心</div>
+              <div class="note">② 校内交易缺少规则约束，交易风险有隐患，很担心</div>
+              <div class="note">③ 拿到货的时间可以尽可能缩短，很急切</div>
+            </div>
+          </div>
+          <div class="q pink">
+            <h4><b>MEET</b>遇到什么买卖家</h4>
+            <div class="notes">
+              <div class="note">① 部分二手 / 三手卖家，被问到物品瑕疵时，回答不上具体问题</div>
+              <div class="note">② 出手全部，但是只要几本</div>
+            </div>
+          </div>
+          <div class="q green">
+            <h4><b>SAYS</b>说些什么</h4>
+            <div class="notes">
+              <div class="note">「拍了一堆照片发到那个二手群里面，然后没有人鸟」</div>
+              <div class="note">「卖家买家回消息有点慢吧」「看成交的价格吧，然后包不包邮」</div>
+              <div class="note">「如果是二手或者三手的买家，他肯定回答不上你的某些问题——他也不知道这个东西哪里有瑕疵啥的」</div>
+              <div class="note">「我希望这个东西直接空投到我家，不要省去那三天的时间」</div>
+            </div>
+          </div>
+          <div class="q">
+            <h4><b>THINKS</b>在想什么</h4>
+            <div class="notes">
+              <div class="note">① 卖东西优先看物品对自己是否还有用处，情感纪念意义也会影响要不要出</div>
+              <div class="note">② 买二手，需求和喜欢程度，价格、物流也考量</div>
+              <div class="note">③ 如果卖家对自家物品一问三不知，直接默认物品不靠谱，不愿冒险</div>
+              <div class="note">④ 对于校内平台，不怕功能少，最怕没人用</div>
+              <div class="note">⑤ 很看重物流速度、交付速度</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="fn-cap"><span class="tag">Extracted</span>
+        <p>由调研板「EMPATHY MAP · 校内二手市场交易平台」受访者 01 地图逐条提取（共 6 位受访者，此处展示典型一张），非截图。</p>
+      </div>
+    </div>
+
+    <div class="fn-card rv" style="margin-top:clamp(18px,2.8vw,30px)">
+      <div class="fn-head"><h3>亲和图 · 大学生二手交易方案</h3><span class="sub">Affinity Mapping · 7 组主题</span></div>
+      <div class="fn-body">
+        <div class="affwrap">
+          <div class="evwrap">
+            <div class="ev v1"><b>E01 · P01 小陈</b>「卖卖买来回消息有点慢吧」</div>
+            <div class="ev v2"><b>E02 · P02 压了</b>「最麻烦的，就是在等回复消息，还不知道这个东西卖出去没有。」</div>
+            <div class="ev v3"><b>E03 · P04 大黄</b>「懒得出，感觉发的消息一发就沉大海了。」</div>
+            <div class="ev v3"><b>E04 · P04 大黄</b>「给他发了消息，他看完之后不回我，最后自己就显示了。如果他半天不回我就暗自拉黑。」</div>
+            <div class="ev v2"><b>E05 · P02 压了</b>「回复快一点吧，然后及时把已经出售的商品标注一下，没有出售的就还留在那里。」</div>
+            <div class="ev v2"><b>E06 · P02 压了</b>「希望出一个类似于小程序或网站，把要卖的东西汇总整理。」</div>
+            <div class="ev v1"><b>E07 · P01 小陈</b>「如果是一个二手或者是三手的卖家，他肯定回答不上来你的东西问题，比如他也不知道这个东西哪里有瑕疵的。」</div>
+            <div class="ev v2"><b>E08 · P02 压了</b>「最不放心的就是他那个东西的质量吧。」</div>
+            <div class="ev v3"><b>E09 · P04 大黄</b>「希望可以点击视频观看，物品能够 360 度展示，避免后边因为破损产生纠纷」</div>
+            <div class="ev v1"><b>E10 · P01 小陈</b>「有成交的价格吧，然后包邮。」</div>
+            <div class="ev v2"><b>E11 · P02 压了</b>「肯定会觉得有没有比他更好的，或者说卖便宜一点点的。」</div>
+            <div class="ev v3"><b>E12 · P04 大黄</b>「要贵一点的东西就用闲鱼，便宜点的东西就用二手的，小红书也有用。」</div>
+            <div class="ev v3"><b>E13 · P04 大黄</b>「希望它有同类型的品，不出压得过低的价。」</div>
+            <div class="ev v3"><b>E14 · P04 大黄</b>「然后最好针对纠纷行为，可以有客服介入，就跟闲鱼的小法庭一样。」</div>
+            <div class="ev v1"><b>E15 · P01 小陈</b>「拍了一堆照片发到那个二手群里面，然后没有人鸟」</div>
+            <div class="ev v1"><b>E16 · P01 小陈</b>「我希望这个东西直接空投到我家，不要省去那三天的时间。」</div>
+            <div class="ev v6"><b>E17 · P03 了了</b>「我在校园群里发消息没人理我。」</div>
+            <div class="ev v6"><b>E18 · P03 了了</b>「我说我的 500 块钱，已经是最低了，他上来问我 250 卖不卖。」</div>
+            <div class="ev v6"><b>E19 · P03 了了</b>「在甘肃，发到那个买家那个地方居然要 20 块运费。」</div>
+            <div class="ev v4"><b>E20 · P05 泡芙</b>「就是可能在和买家讨价还价的时候花费了我很多时间和精力。」</div>
+            <div class="ev v4"><b>E21 · P05 泡芙</b>「有时候你卖出一些东西，必须要填写物品类别，还要描述这个物品。」</div>
+            <div class="ev v4"><b>E22 · P05 泡芙</b>「部分买家想要卖家包邮，不愿意承担运费成本。」</div>
+            <div class="ev v5"><b>E23 · P06 章章</b>「和商家沟通确认有没有货的过程很麻烦，其实卖家东西已经被卖掉了，但他没有下架那个商品。」</div>
+            <div class="ev v5"><b>E24 · P06 章章</b>「不要让卖家自己随便设置运费。」</div>
+            <div class="ev v6"><b>E25 · P03 了了</b>「比如售后服务。」</div>
+          </div>
+
+          <div class="aff">
+            <div class="acol ac1">
+              <h5>主题分组 01</h5><div class="sub">主题名称：沟通回复低效率</div>
+              <div class="stk y"><b>E01</b>「卖卖买来回消息有点慢吧」</div>
+              <div class="stk y"><b>E02</b>「最麻烦的，就是在等回复消息，还不知道这个东西卖出去没有。」</div>
+              <div class="stk y"><b>E03</b>「懒得出，感觉发的消息一发就沉大海了。」</div>
+              <div class="stk y"><b>E04</b>「给他发了消息，他看完之后不回我，最后自己就显示了。如果他半天不回我就暗自拉黑。」</div>
+              <div class="stk y"><b>E17</b>「我在校园群里发消息没人理我。」</div>
+              <div class="stk y"><b>E20</b>「就是可能在和买家讨价还价的时候花费了我很多时间和精力。」</div>
+              <div class="mode">共同模式：需要一套即时反馈机制，解决沟通响应滞后</div>
+            </div>
+            <div class="acol ac2">
+              <h5>主题分组 02</h5><div class="sub">主题名称：商品管理混乱，发布帖子麻烦</div>
+              <div class="stk y"><b>E05</b>「回复快一点吧，然后及时把已经出售的商品标注一下，没有出售的就还留在那里。」</div>
+              <div class="stk y"><b>E06</b>「希望出一个类似于小程序或网站，把要卖的东西汇总整理。」</div>
+              <div class="stk y"><b>E18</b>「我说我的 500 块钱，已经是最低了，他上来问我 250 卖不卖。」</div>
+              <div class="stk y"><b>E21</b>「有时候你卖出一些东西，必须要填写物品类别，还要描述这个物品。」</div>
+              <div class="stk y"><b>E23</b>「和商家沟通确认有没有货的过程很麻烦，其实卖家东西已经被卖掉了，但他没有下架那个商品。」</div>
+              <div class="mode">共同模式：需要集中的商品库存货架，统一管理上架、待售、已售信息</div>
+            </div>
+            <div class="acol ac3">
+              <h5>主题分组 03</h5><div class="sub">主题名称：物品交易信任不足</div>
+              <div class="stk y"><b>E07</b>「如果是一个二手或者是三手的卖家，他肯定回答不上来你的东西问题，比如他也不知道这个东西哪里有瑕疵的。」</div>
+              <div class="stk y"><b>E08</b>「最不放心的就是他那个东西的质量吧。」</div>
+              <div class="stk y"><b>E09</b>「希望可以点击视频观看，物品能够 360 度展示，避免后边因为破损产生纠纷」</div>
+              <div class="stk y"><b>E24</b>「不要让卖家自己随便设置运费。」</div>
+              <div class="mode">共同模式：需要更可信的实物展示方式，补充成色与瑕疵信息，降低信任风险</div>
+            </div>
+            <div class="acol ac4">
+              <h5>主题分组 04</h5><div class="sub">主题名称：定价/比价困难</div>
+              <div class="stk y"><b>E10</b>「有成交的价格吧，然后包邮。」</div>
+              <div class="stk y"><b>E11</b>「肯定会觉得有没有比他更好的，或者说卖便宜一点点的。」</div>
+              <div class="stk y"><b>E12</b>「要贵一点的东西就用闲鱼，便宜点的东西就用二手的，小红书也有用。」</div>
+              <div class="stk y"><b>E13</b>「希望它有同类型的品，不出压得过低的价。」</div>
+              <div class="stk y"><b>E22</b>「部分买家想要卖家包邮，不愿意承担运费成本。」</div>
+              <div class="mode">共同模式：需要公开价格参考体系，打破信息孤岛，减少恶意压价与盲目比价</div>
+            </div>
+            <div class="acol ac5">
+              <h5>主题分组 05</h5><div class="sub">主题名称：交易缺保障</div>
+              <div class="stk y"><b>E14</b>「然后最好针对纠纷行为，可以有客服介入，就跟闲鱼的小法庭一样。」</div>
+              <div class="stk y"><b>E25</b>「比如售后服务。」</div>
+              <div class="mode">共同模式：需要交易留痕保障，约束口头约定下的跑单、毁约行为</div>
+            </div>
+            <div class="acol ac6">
+              <h5>主题分组 06</h5><div class="sub">主题名称：曝光引流难</div>
+              <div class="stk y"><b>E15</b>「拍了一堆照片发到那个二手群里面，然后没有人鸟」</div>
+              <div class="stk y"><b>E17</b>「我在校园群里发消息没人理我。」</div>
+              <div class="mode">共同模式：需要稳定长效的商品曝光渠道，摆脱刷屏信息</div>
+            </div>
+            <div class="acol ac7">
+              <h5>主题分组 07</h5><div class="sub">主题名称：快速流程中遇到时间长，价格高的问题</div>
+              <div class="stk y"><b>E16</b>「我希望这个东西直接空投到我家，不要省去那三天的时间。」</div>
+              <div class="stk y"><b>E19</b>「在甘肃，发到那个买家那个地方居然要 20 块运费。」</div>
+              <div class="stk y"><b>E24</b>「如果交易地点距离很远，就不想过去。」</div>
+              <div class="mode">共同模式：需要标准化交付，简化取货协商流程，缩短从成交到拿到物品的等待时间</div>
+            </div>
+          </div>
+
+          <div class="ins5">
+            <div class="plan-box"><h5>共同模式</h5><p>回复效率低，商品实际状态可能跟帖子描述不一致</p></div>
+            <div class="plan-box"><h5>核心痛点</h5><p>商品管理混乱，发布帖子麻烦</p></div>
+            <div class="plan-box"><h5>用户需求</h5><p>高效率的解决闲置物品或者快速找到需要的物品</p></div>
+            <div class="plan-box"><h5>设计机会</h5><p>对卖家发布的帖子做出要求（与实际情况相符）；对不同商品分类，方便买家快速定位；设置一些市场参考价；设置售后服务</p></div>
+            <div class="plan-box"><h5>优先级与依据</h5><p><b>高：</b>沟通回复低效率、商品管理混乱、发布帖子麻烦<br><b>中：</b>定价比价困难、快速流程中遇到时间长价格高的问题、售后问题<br><b>低：</b>物品交易信任不足、交易缺保障<br><b>待讨论</b></p></div>
+          </div>
+        </div>
+      </div>
+      <div class="fn-cap"><span class="tag">Extracted</span>
+        <p>由超宽拼板「AFFINITY MAPPING」逐条提取：25 条原话（E01–E25，受访者 P01 小陈 / P02 压了 / P03 了了 / P04 大黄 / P05 泡芙 / P06 章章）→ 7 组主题 → 洞察总结，非截图。</p>
+      </div>
+    </div>
+
+    <div class="duo" style="margin-top:clamp(18px,2.8vw,30px)">
+      <div class="fn-card rv">
+        <div class="fn-head"><h3>方法校准</h3><span class="sub">Method · 15 条原话 → 5 组主题</span></div>
+        <div class="fn-body">
+          <p style="font-size:.66rem;color:var(--muted)">先做一次小样本演练：把 15 条原话逐条编码，试贴到 5 组主题里，统一规则后再上全量数据。</p>
+          <div class="flow5">
+            <div class="fcell">P01–P15<br>逐条编码</div><span class="arr">→</span>
+            <div class="fcell">同主题贴进<br>同一列</div><span class="arr">→</span>
+            <div class="fcell">5 组主题<br>命名上墙</div>
+          </div>
+          <div class="flow5" style="margin-top:12px">
+            <span class="c-hot">定价困惑</span><span class="c-hot">消息沉没</span><span class="c-hot">信任顾虑</span>
+            <span class="c-hot">交付成本</span><span class="c-hot">商品成色</span>
+          </div>
+        </div>
+        <div class="fn-cap"><span class="tag">Rebuilt</span><p>方法演练示意，内容取自真实编码规则。</p></div>
+      </div>
+      <div class="fn-card rv">
+        <div class="fn-head"><h3>POV → HMW</h3><span class="sub">问题重述 · 功能优先级的裁判</span></div>
+        <div class="fn-body">
+          <div class="stk y"><b>POV · 沟通回复低效率</b>从 E01–E04、E17、E20 的一簇原话看到：卖出闲置的同学在等待回复、反复催促与讨价还价上消耗大量时间精力——「感觉发的消息一发就沉大海了」。</div>
+          <div class="stk p"><b>HMW</b>我们如何让每一次询问与回复即时可见，沟通不再石沉大海？</div>
+          <div class="stk y"><b>POV · 定价比价困难</b>从 E10–E13、E18、E22 的一簇原话看到：定价没有参照，只能凭感觉开价——「我说我的 500 块钱，已经是最低了，他上来问我 250 卖不卖」。</div>
+          <div class="stk p"><b>HMW</b>我们如何让成交价沉淀下来，成为下一次定价的参照？</div>
+          <div class="stk y"><b>POV · 交易缺保障</b>从 E14、E25 的一簇原话看到：纠纷没有约束与兜底——「最好针对纠纷行为，可以有客服介入，就跟闲鱼的小法庭一样」。</div>
+          <div class="stk p"><b>HMW</b>我们如何给校内交易加上规则与兜底？</div>
+        </div>
+        <div class="fn-cap"><span class="tag">Extracted</span><p>POV 依据亲和图原话簇重述（E 编码对应上方原始资料）。</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 04 网页落地 ============ -->
+<section id="build" style="background:linear-gradient(180deg,rgba(234,240,255,.55),transparent 30%)">
+  <div class="wrap">
+    <div class="sec-head rv">
+      <span class="kicker">04 · Build</span>
+      <h2>闲鹅 2.0：<span class="b">五个入口</span>，一条顺路</h2>
+      <p class="lede">
+        依据洞察搭出产品骨架：五大模块覆盖「逛 → 搜 → 发 → 聊 → 管」全流程，
+        AI 负责降低发布门槛，驿站自提负责解决交付。
+      </p>
+    </div>
+
+    <div class="tabs rv">
+      <div class="tab"><i>🏠</i><b>首页</b><span>闲置小市集<br>搜索 · 分类</span></div>
+      <div class="tab"><i>🧑‍🤝‍🧑</i><b>广场</b><span>闲鹅广场<br>帖子 · 点赞收藏</span></div>
+      <div class="tab hot"><i>＋</i><b>发布</b><span>AI 识别<br>标签 · 描述 · 定价</span></div>
+      <div class="tab"><i>💬</i><b>消息</b><span>一对一沟通<br>联系卖家</span></div>
+      <div class="tab"><i>👤</i><b>我的</b><span>订单 · 收藏<br>偏好档案</span></div>
+    </div>
+
+    <div class="gallery rv">
+      <figure class="shot">
+        <div style="display:flex;justify-content:center;padding:18px 0">
+          <div class="ph">
+            <div class="ph-head">
+              <div class="ph-title"><span>闲置小市集</span><small>在线 · 已连接</small></div>
+              <div class="sbar">🔍 搜索闲置物品</div>
+            </div>
+            <div class="ph-body">
+              <div class="ftabs">
+                <span class="ftab on">推荐</span><span class="ftab">最新发布</span><span class="ftab">热门商品</span>
+                <span class="filter">▽ 筛选</span>
+              </div>
+              <div class="cats">
+                <span class="ci">📖<span>教材书籍</span></span><span class="ci">📱<span>电子数码</span></span>
+                <span class="ci">🎨<span>绘画文体</span></span><span class="ci">👗<span>服饰鞋包</span></span>
+                <span class="ci">🛏<span>宿舍好物</span></span><span class="ci">🎀<span>二次元周边</span></span>
+              </div>
+              <div class="sec-t">闲鹅校园二手 APP</div>
+              <div class="mgrid">
+                <div class="mcard"><div class="im a">🍟</div><p>食品零食，九成新，几乎无使用痕迹</p><div class="pr"><b>¥5</b><span>电子数码·九成</span></div></div>
+                <div class="mcard"><div class="im b">📏</div><p>开叉打版尺</p><div class="pr"><b>¥5</b><span>教材书籍·九成</span></div></div>
+                <div class="mcard"><div class="im c">🧸</div><p>手办摆件，闲置出</p><div class="pr"><b>¥1314</b><span>生活用品·九成</span></div></div>
+                <div class="mcard"><div class="im d">🧦</div><p>小女仆一只，不干活只吃东西</p><div class="pr"><b>¥999</b><span>其他闲置·零成</span></div></div>
+              </div>
+            </div>
+            <div class="ph-tabs">
+              <span class="tb on"><i>🏠</i>首页</span><span class="tb"><i>▦</i>广场</span>
+              <span class="tb plus"><i>＋</i>发布</span><span class="tb"><i>🔔</i>消息</span><span class="tb"><i>👤</i>我的</span>
+            </div>
+          </div>
+        </div>
+        <figcaption><b>首页 · 闲置小市集</b>推荐 / 最新 / 热门排序 + 分类图标筛选，让刷屏被结构化信息取代。</figcaption>
+      </figure>
+      <figure class="shot">
+        <div style="display:flex;justify-content:center;padding:18px 0">
+          <div class="ph">
+            <div class="ph-head" style="background:linear-gradient(135deg,#FFF7F0,#FFEEDD);color:#5A4632">
+              <div class="ph-title" style="color:#5A4632"><span>← 发布闲置</span></div>
+            </div>
+            <div class="ph-body">
+              <div class="ftabs">
+                <span class="ftab on">🏷 出闲置（卖东西）</span><span class="ftab">🛍 收闲置（求购）</span>
+              </div>
+              <div class="sec-t">拍拍你的闲置 <span style="font-weight:600;font-size:.5rem;color:#B79A82">第一张为封面 · 最多 4 张</span></div>
+              <div class="chips"><span class="c-cat" style="padding:16px 26px;border-style:dashed">＋</span><span class="c-cat" style="padding:16px 26px;border-style:dashed">📷</span></div>
+              <div class="mrow em" style="margin-top:8px;font-size:.55rem">🤖 <b>AI 识别</b> · 上传照片后自动识别 <span style="float:right">↻ 重新识别</span></div>
+              <p style="font-size:.55rem;color:#B79A82;margin:4px 0">AI 识别后自动生成标签，也可手动选择：<b style="color:#E9812F">从全部标签中选择（可搜索）</b></p>
+              <div class="mrow warm" style="font-size:.55rem">¥ 0.00</div>
+              <div class="mrow warm" style="font-size:.55rem;color:#B79A82">描述一下物品的成色、购买时间、交易方式… <span style="float:right;color:#E9812F">✨ AI 生成描述</span></div>
+              <div class="chips" style="margin-top:8px">
+                <span class="c-cat">全新</span><span class="c-hot">九成新</span><span class="c-cat">八成新</span><span class="c-cat">有痕迹</span>
+              </div>
+              <div class="chips" style="margin-top:6px">
+                <span class="c-cat">接受小刀</span><span class="c-cat">不接受小刀</span><span class="c-hot">线下面交</span><span class="c-cat">送到楼下</span>
+              </div>
+            </div>
+            <div class="mtabs" style="padding:10px;text-align:center;background:#E8D5C2;color:#fff;font-weight:800;border-radius:14px;margin:0 10px 12px;border:none;font-size:.62rem">发布闲置</div>
+          </div>
+        </div>
+        <figcaption><b>发布 · AI 识别</b>出闲置 / 收闲置分类 + AI 拍照生成标签与描述，30 秒完成发布。</figcaption>
+      </figure>
+    </div>
+
+    <div class="findings rv" style="margin-top:clamp(18px,2.8vw,30px)">
+      <article class="find"><h3>AI 识别，30 秒发布</h3>
+        <p>上传照片自动识别物品、生成标签与描述，也可手动修改；定价给出「闲鹅推荐价」做参照。</p></article>
+      <article class="find"><h3>偏好档案，相似用户匹配</h3>
+        <p>在线习惯与交易偏好进档案，为相似用户匹配做铺垫；回夏速度、常在线时段可选。</p></article>
+      <article class="find"><h3>东门驿站自提</h3>
+        <p>商品标注「东门驿站自提 / 送到楼下」，卖家备注位置会展示给买家，交易方式一目了然。</p></article>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 05 测试升级 ============ -->
+<section id="iterate">
+  <div class="wrap">
+    <div class="sec-head rv">
+      <span class="kicker">05 · Test &amp; Iterate</span>
+      <h2>真实上手之后：<span class="p">2.0 → 3.0</span></h2>
+    </div>
+
+    <div class="ba5-scroll rv">
+      <div class="ba5-stage" id="ba5Stage">
+        <div class="ba5-labels">
+          <span class="ba5-lb after">AFTER · 修改后</span>
+          <span class="ba5-lb before">BEFORE · 修改前</span>
+        </div>
+        <div class="ba5-rows" id="ba5Rows">
+          <div class="ba5-row before">
+            <img src="../assets/p1-before.png" alt="1号 · 修改前">
+            <img src="../assets/p2-before.png" alt="2号 · 修改前">
+            <img src="../assets/p3-before.png" alt="3号 · 修改前">
+            <img src="../assets/p4-before.png" alt="4号 · 修改前">
+            <img src="../assets/p5-before.png" alt="5号 · 修改前">
+          </div>
+          <div class="ba5-row after">
+            <img src="../assets/p1-after.png" alt="1号 · 修改后">
+            <img src="../assets/p2-after.png" alt="2号 · 修改后">
+            <img src="../assets/p3-after.png" alt="3号 · 修改后">
+            <img src="../assets/p4-after.png" alt="4号 · 修改后">
+            <img src="../assets/p5-after.png" alt="5号 · 修改后">
+          </div>
+          <div class="ba5-line">
+            <button class="ba5-handle" id="ba5Handle" type="button" role="slider"
+              aria-label="拖动对比修改前后" aria-valuemin="0" aria-valuemax="100" aria-valuenow="50">↔</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <p class="ba5-hint rv">拖动中间的竖线（也可点击任意位置或按 ← → 方向键），线滑到哪里就切换哪里</p>
+  </div>
+</section>
+
+<!-- ============ 06 下一步 ============ -->
+<section id="next" style="background:linear-gradient(180deg,rgba(234,247,239,.6),transparent 30%)">
+  <div class="wrap">
+    <div class="sec-head rv">
+      <span class="kicker">06 · What's Next</span>
+      <h2>下一程：<span class="g">信任、担保与更聪明的发布</span></h2>
+      <p class="lede">调研里出现频率最高、但我们还没来得及做完的事，排进了 3.1 的清单。</p>
+    </div>
+    <div class="next-steps rv">
+      <article class="next-card"><span class="k">Next 01 · 假设①</span><h3>寝室点点跑腿代送</h3>
+        <p>校内代取快递互助 + 寝室点点配送：回应「空投到家」的期待，把拿到货的时间压到最短。</p></article>
+      <article class="next-card"><span class="k">Next 02 · 假设②</span><h3>历史成交价参考定价</h3>
+        <p>发布闲置时自动展示本校同类商品历史成交价，让定价有依据——问卷里标注的核心卖点。</p></article>
+      <article class="next-card"><span class="k">Next 03</span><h3>校内信用与担保</h3>
+        <p>学号轻认证 + 资金托管担保交易（参考 Gali 模式）：交易有规则约束，解决「交易风险有隐患」。</p></article>
+    </div>
+    <p class="rv" style="text-align:center;margin-top:clamp(26px,4vw,44px)">
+      <a class="cta" href="#top" style="text-decoration:none;display:inline-block;font-size:.8rem;border:1.5px solid var(--ink);border-radius:999px;padding:10px 22px;font-weight:800">← 回到故事开头</a>
+    </p>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <p><b>闲鹅 · 校园二手闲置平台</b> — 湖北美院联合创作营课程项目 · 产品故事页</p>
+    <p style="margin-top:6px">问卷份数与访谈人数为调研计划目标值，最终以实际回收为准；2.0 → 3.0 对比截图为真实迭代记录。</p>
+    <p style="margin-top:6px"><a href="./" style="color:var(--muted)">历史版本归档 →</a></p>
+  </div>
+</footer>
+
+<script>
+const RM=matchMedia('(prefers-reduced-motion: reduce)').matches;
+if(!RM){
+  const io=new IntersectionObserver(es=>{
+    es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}});
+  },{threshold:.1,rootMargin:'0px 0px -4% 0px'});
+  document.querySelectorAll('.rv').forEach(el=>io.observe(el));
+}else{
+  document.querySelectorAll('.rv').forEach(el=>el.classList.add('in'));
+}
+/* Before & After：一条竖线贯通 5 个手机，拖动/点击/方向键实时切换 */
+(function(){
+  const stage=document.getElementById('ba5Stage'),rows=document.getElementById('ba5Rows'),handle=document.getElementById('ba5Handle');
+  if(!stage||!rows||!handle)return;
+  let pos=50,dragging=false;
+  function setPos(v){
+    pos=Math.max(0,Math.min(100,v));
+    stage.style.setProperty('--pos',pos.toFixed(2)+'%');
+    handle.setAttribute('aria-valuenow',Math.round(pos));
+  }
+  function fromX(x){const r=rows.getBoundingClientRect();setPos((x-r.left)/r.width*100);}
+  rows.addEventListener('pointerdown',e=>{dragging=true;try{rows.setPointerCapture(e.pointerId)}catch(_){};fromX(e.clientX);});
+  rows.addEventListener('pointermove',e=>{if(dragging)fromX(e.clientX);});
+  ['pointerup','pointercancel','lostpointercapture'].forEach(t=>rows.addEventListener(t,()=>{dragging=false;}));
+  handle.addEventListener('keydown',e=>{
+    const step=e.shiftKey?10:2;
+    if(e.key==='ArrowRight'||e.key==='ArrowUp'){setPos(pos+step);e.preventDefault();}
+    else if(e.key==='ArrowLeft'||e.key==='ArrowDown'){setPos(pos-step);e.preventDefault();}
+    else if(e.key==='Home'){setPos(0);e.preventDefault();}
+    else if(e.key==='End'){setPos(100);e.preventDefault();}
+  });
+  setPos(50);
+})();
+</script>
+</body>
+</html>
